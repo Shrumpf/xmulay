@@ -1,0 +1,48 @@
+@import "https://fonts.bunny.net/css?family=roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i";
+
+:root {
+	--orange: #f90;
+	--orange-hover: #ffa31a;
+}
+
+* {
+	box-sizing: border-box;
+	min-width: 0;
+	margin: 0;
+	padding: 0;	
+}
+
+html,
+body {
+	height: 100%;
+
+	font-family: Arial, Helvetica, sans-serif;
+	font-family: Roboto, sans-serif;
+	font-size: 16px;
+	color: #fff;
+
+	background-color: #000;
+}
+
+a {
+	text-decoration: none;
+}
+
+.arrow {
+	display: inline-block;
+	padding: 5px;
+	border: solid #fff;
+	border-width: 0 3px 3px 0;
+}
+
+.arrow.small {
+	padding: 3px;
+}
+
+.arrow.right {
+	transform: rotate(-45deg);
+}
+
+.arrow.down {
+	transform: rotate(45deg);
+}

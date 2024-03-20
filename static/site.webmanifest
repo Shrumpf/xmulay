@@ -1,0 +1,14 @@
+{
+    "name": "xMulay",
+    "short_name": "xMulay",
+    "icons": [
+        {
+            "src": "/android-chrome-72x72.png",
+            "sizes": "72x72",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#e79512",
+    "background_color": "#e79512",
+    "display": "standalone"
+}
