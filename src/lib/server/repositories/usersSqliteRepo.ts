@@ -11,11 +11,11 @@ export async function getUsersFromSqlite(): Promise<User[]> {
     return db.select().from(users).where(isNotNull(users.created_at)).orderBy(users.display_name).all();
 }
 
-export function getUserFromSqlite(id: string): User | undefined {
+export function getUserFromSqlite(id: string): undefined | User {
     return db.select().from(users).where(eq(users.id, id)).limit(1).get()
 }
 
-export async function createUser(user: User): Promise<User | undefined> {
+export async function createUser(user: User): Promise<undefined | User> {
     if (!getUserFromSqlite(user.id)) {
         return (await db.insert(users).values(user).onConflictDoNothing().returning())[0];
     }

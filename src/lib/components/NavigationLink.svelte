@@ -1,13 +1,14 @@
 <script lang="ts">
-    import { page } from "$app/stores";
     import type { Snippet } from "svelte";
 
+    import { page } from "$app/stores";
+
     interface Props {
-        href: string;
         children?: Snippet;
+        href: string;
     }
 
-    let { href, children }: Props = $props();
+    let { children, href }: Props = $props();
     let active = $derived($page.url.pathname === href);
 </script>
 

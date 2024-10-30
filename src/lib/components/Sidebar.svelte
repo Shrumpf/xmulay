@@ -1,6 +1,4 @@
 <script>
-    import { run } from 'svelte/legacy';
-
     import { navigating } from "$app/stores";
 
     import Hamburger from "./Hamburger.svelte";
@@ -14,7 +12,7 @@
     /** @type {Props} */
     let { open = $bindable(false) } = $props();
 
-    run(() => {
+    $effect.pre(() => {
         if ($navigating) {
             open = false;
         }

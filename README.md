@@ -5,10 +5,9 @@
 Rename the .env.example to .env or set your environment variables otherwise.
 
 ```
-CLIENT_ID=Your twitch client id
-CLIENT_SECRET=Your twitch client secret
+AUTH_TWITCH_ID=Your twitch client id
+AUTH_TWITCH_SECRET=Your twitch client secret
 AUTH_SECRET=Generated auth secret for auth.js
-AUTH_URL=Auth endpoint e.g. http://localhost:5173/auth
 PUBLIC_BROADCASTER_ID=The Twitch Id from where you want to get the clips 
 ```
 

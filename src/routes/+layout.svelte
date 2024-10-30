@@ -1,8 +1,9 @@
 <script lang="ts">
+	import type { Snippet } from "svelte";
+
 	import Header from "$lib/components/Header.svelte";
 	import NetworkBar from "$lib/components/NetworkBar.svelte";
-	import Sidebar from "$lib/components/Sidebar.svelte";
-    import type { Snippet } from "svelte";
+    import Sidebar from "$lib/components/Sidebar.svelte";
 
 	import "./styles.scss";
 	interface Props {
@@ -11,12 +12,6 @@
 
 	let { children }: Props = $props();
 	let sidepanel_open = $state(false);
-
-	function prevent_scroll(event: TouchEvent | WheelEvent) {
-		if (sidepanel_open) {
-			event.preventDefault();
-		}
-	}
 </script>
 
 <div class="app" class:overflow-hidden={sidepanel_open}>

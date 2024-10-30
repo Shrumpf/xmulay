@@ -2,11 +2,11 @@
     import type { Snippet } from "svelte";
 
     interface Props {
-        columns?: string;
         children?: Snippet;
+        columns?: string;
     }
 
-    let { columns = "4", children }: Props = $props();
+    let { children, columns = "4" }: Props = $props();
 </script>
 
 <div
