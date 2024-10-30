@@ -1,8 +1,8 @@
-<script>
-    export let open = false;
+<script lang="ts">
+    let { open = $bindable(false) } = $props();
 </script>
 
-<button class:open on:click={() => (open = !open)}>
+<button class:open onclick={() => (open = !open)} aria-label="Burger Menu">
     <svg height="10" width="16">
         <line id="top" x1="0" x2="16" y1="1" y2="1" />
         <line id="middle" x1="0" x2="12" y1="6" y2="6" />

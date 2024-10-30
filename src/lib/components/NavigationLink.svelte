@@ -1,12 +1,18 @@
 <script lang="ts">
     import { page } from "$app/stores";
+    import type { Snippet } from "svelte";
 
-    export let href: string;
-    $: active = $page.url.pathname === href;
+    interface Props {
+        href: string;
+        children?: Snippet;
+    }
+
+    let { href, children }: Props = $props();
+    let active = $derived($page.url.pathname === href);
 </script>
 
 <a {href}>
-    <span><slot /></span>
+    <span>{@render children?.()}</span>
     {#if active}
         <span class="active-line"></span>
     {/if}

@@ -34,12 +34,16 @@
                 <strong>{$page.data.session.user?.name ?? "User"}</strong>
             </p>
             <SignOut>
-                <div class="buttonPrimary" slot="submitButton">Sign out</div>
+                {#snippet submitButton()}
+                    <div class="buttonPrimary" >Sign out</div>
+                {/snippet}
             </SignOut>
         {:else}
             <span class="notSignedInText">You are not signed in</span>
             <SignIn>
-                <div slot="submitButton">Sign in</div>
+                {#snippet submitButton()}
+                    <div>Sign in</div>
+                {/snippet}
             </SignIn>
         {/if}
     </div>

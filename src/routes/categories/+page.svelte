@@ -2,7 +2,7 @@
     import ClipGrid from "$lib/components/ClipGrid.svelte";
     import { Game } from "$lib/models/Game.js";
 
-    export let data;
+    let { data } = $props();
 </script>
 
 <svelte:head>

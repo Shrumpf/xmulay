@@ -2,9 +2,15 @@
 	import Header from "$lib/components/Header.svelte";
 	import NetworkBar from "$lib/components/NetworkBar.svelte";
 	import Sidebar from "$lib/components/Sidebar.svelte";
+    import type { Snippet } from "svelte";
 
 	import "./styles.scss";
-	let sidepanel_open = false;
+	interface Props {
+		children?: Snippet;
+	}
+
+	let { children }: Props = $props();
+	let sidepanel_open = $state(false);
 
 	function prevent_scroll(event: TouchEvent | WheelEvent) {
 		if (sidepanel_open) {
@@ -13,18 +19,13 @@
 	}
 </script>
 
-<svelte:window
-	on:touchmove|nonpassive={prevent_scroll}
-	on:wheel|nonpassive={prevent_scroll}
-/>
-
 <div class="app" class:overflow-hidden={sidepanel_open}>
 	<Sidebar bind:open={sidepanel_open} />
 	<NetworkBar />
 	<Header bind:sidepanel_open />
 
 	<main class="content">
-		<slot />
+		{@render children?.()}
 	</main>
 
 	<footer></footer>

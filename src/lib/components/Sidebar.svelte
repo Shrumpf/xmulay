@@ -1,14 +1,24 @@
 <script>
+    import { run } from 'svelte/legacy';
+
     import { navigating } from "$app/stores";
 
     import Hamburger from "./Hamburger.svelte";
     import NavigationLink from "./NavigationLink.svelte";
 
-    export let open = false;
+    /**
+     * @typedef {Object} Props
+     * @property {boolean} [open]
+     */
 
-    $: if ($navigating) {
-        open = false;
-    }
+    /** @type {Props} */
+    let { open = $bindable(false) } = $props();
+
+    run(() => {
+        if ($navigating) {
+            open = false;
+        }
+    });
 </script>
 
 <aside class:open>

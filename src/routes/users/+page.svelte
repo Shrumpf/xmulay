@@ -1,7 +1,7 @@
 <script lang="ts">
     import ClipGrid from "$lib/components/ClipGrid.svelte";
 
-    export let data;
+    let { data } = $props();
 </script>
 
 <ClipGrid columns="5">

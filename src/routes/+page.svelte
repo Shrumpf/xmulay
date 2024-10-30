@@ -2,7 +2,7 @@
 	import Clip from "$lib/components/Clip.svelte";
 	import ClipGrid from "$lib/components/ClipGrid.svelte";
 
-	export let data;
+	let { data } = $props();
 </script>
 
 <svelte:head>

@@ -5,7 +5,11 @@
 
 	import Hamburger from "./Hamburger.svelte";
 
-	export let sidepanel_open = false;
+	interface Props {
+		sidepanel_open?: boolean;
+	}
+
+	let { sidepanel_open = $bindable(false) }: Props = $props();
 </script>
 
 <header>
@@ -30,7 +34,7 @@
 		</div>
 		<div class="profile-menu">
 			{#if $page.data.session}
-				<button type="button">
+				<button type="button" aria-label="Messages">
 					<svg
 						class="feather feather-mail"
 						fill="none"
@@ -48,7 +52,7 @@
 						></polyline></svg
 					>
 				</button>
-				<button type="button">
+				<button type="button" aria-label="Friends">
 					<svg
 						class="feather feather-users"
 						fill="none"
@@ -66,7 +70,7 @@
 						></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg
 					>
 				</button>
-				<button type="button">
+				<button type="button" aria-label="Infos">
 					<svg
 						class="feather feather-info"
 						fill="none"

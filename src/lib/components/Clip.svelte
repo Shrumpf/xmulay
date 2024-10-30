@@ -4,7 +4,7 @@
 
     import { inview } from "svelte-inview";
 
-    let isInView: boolean;
+    let isInView = $state(false);
     const options: Options = {
         unobserveOnEnter: true,
     };
@@ -13,10 +13,14 @@
         isInView = detail.inView;
     };
 
-    export let clip: Clip;
+    interface Props {
+        clip: Clip;
+    }
+
+    let { clip }: Props = $props();
 </script>
 
-<div on:inview_change={handle_change} use:inview={options}>
+<div oninview_change={handle_change} use:inview={options}>
     {#if isInView}
         <div class="clip-thumbnail">
             <a href="/clips/{clip.id}">

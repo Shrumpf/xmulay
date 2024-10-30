@@ -1,6 +1,6 @@
 <script lang="ts">
     import Clip from "$lib/components/Clip.svelte";
-    export let data;
+    let { data } = $props();
 </script>
 
 <svelte:head>

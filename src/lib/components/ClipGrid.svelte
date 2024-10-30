@@ -1,5 +1,12 @@
 <script lang="ts">
-    export let columns = "4";
+    import type { Snippet } from "svelte";
+
+    interface Props {
+        columns?: string;
+        children?: Snippet;
+    }
+
+    let { columns = "4", children }: Props = $props();
 </script>
 
 <div
@@ -8,7 +15,7 @@
 
 --columns: {columns}"
 >
-    <slot />
+    {@render children?.()}
 </div>
 
 <style lang="scss">
