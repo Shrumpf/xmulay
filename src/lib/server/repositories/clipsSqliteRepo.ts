@@ -31,3 +31,11 @@ export function getClipsByCategoryFromSqlite(category: string) {
 export function getClipsByUserFromSqlite(id: string) {
     return db.select().from(clips).where(eq(clips.creator_id, id)).orderBy(desc(clips.view_count)).all()
 }
+
+export async function updateClip(clip: Clip) {
+    try {
+        await db.update(clips).set(clip).where(eq(clips.id, clip.id));
+    } catch (error) {
+        console.error("Error updating clip:", error);
+    }
+}

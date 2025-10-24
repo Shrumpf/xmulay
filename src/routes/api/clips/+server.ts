@@ -1,8 +1,8 @@
-import type { HelixClip } from '@twurple/api';
+import type { HelixClip, HelixClipFilter } from '@twurple/api';
 
 import { PUBLIC_BROADCASTER_ID } from "$env/static/public";
 import { Clip } from '$lib/models/Clip';
-import { createClip, getClipFromSqlite } from '$lib/server/repositories/clipsSqliteRepo';
+import { createClip, getClipFromSqlite, updateClip } from '$lib/server/repositories/clipsSqliteRepo';
 import { getGameFromSqlite } from '$lib/server/repositories/gamesSqliteRepo';
 import { createShadowUser, getUserFromSqlite } from '$lib/server/repositories/usersSqliteRepo';
 import { getGame } from '$lib/server/services/game';
@@ -10,13 +10,19 @@ import { GetApiClient } from '$lib/server/services/twurple.js';
 import { getUser } from '$lib/server/services/user';
 import { json } from '@sveltejs/kit';
 
-export async function GET() {
+export async function GET({ url }: { url: URL }) {
     const api_clips: HelixClip[] = [];
     let new_created = 0;
     const start = performance.now();
 
     const api = GetApiClient();
-    const clip_request = api.clips.getClipsForBroadcasterPaginated(PUBLIC_BROADCASTER_ID);
+
+    const filter: HelixClipFilter = {
+        startDate: new Date(url.searchParams.get('start_date') || '2025-01-01').toISOString(),
+        endDate: new Date(url.searchParams.get('end_date') || Date.now()).toISOString(),
+    }
+
+    const clip_request = api.clips.getClipsForBroadcasterPaginated(PUBLIC_BROADCASTER_ID, filter);
     clip_request.reset();
 
     console.log("🚀 ~ GET ~ start:", start)
@@ -27,13 +33,25 @@ export async function GET() {
             break;
         }
         api_clips.push(...data);
+        console.log("🚀 ~ GET ~ current:", clip_request.current)
     } while (clip_request.currentCursor)
 
     console.log("🚀 ~ GET ~ api_clips:", api_clips.length)
     for (const api_clip of api_clips) {
+
+        if (api_clip.gameId) {
+            const game = getGameFromSqlite(api_clip.gameId);
+            if (!game) {
+                await getGame(api_clip.gameId);
+            }
+        }
+
         const clip = getClipFromSqlite(api_clip.id);
         if (clip) {
             console.log("🚀 ~ GET ~ clip:", clip.title)
+            if (url.searchParams.get('update') === "true") {
+                updateClip(new Clip(api_clip));
+            }
             continue;
         }
 
@@ -50,13 +68,6 @@ export async function GET() {
             const api_broadcaster = await getUser(api_clip.broadcasterId);
             if (!api_broadcaster) {
                 await createShadowUser(api_clip.broadcasterId, api_clip.broadcasterDisplayName);
-            }
-        }
-
-        if (api_clip.gameId) {
-            const game = getGameFromSqlite(api_clip.gameId);
-            if (!game) {
-                await getGame(api_clip.gameId);
             }
         }
 
